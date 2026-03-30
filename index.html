@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz - La Loi Badinter (1985)</title>
+  <style>
+    :root {
+      --tmk-blue: #0f4c81;
+      --tmk-blue-dark: #0a3558;
+      --tmk-gold: #c8a96b;
+      --tmk-white: #ffffff;
+      --tmk-text: #1f2937;
+      --tmk-muted: #6b7280;
+      --tmk-border: #d9e2ec;
+      --tmk-success: #1f7a3e;
+      --tmk-success-bg: #eefaf1;
+      --tmk-error: #b42318;
+      --tmk-error-bg: #fef3f2;
+      --tmk-card: #f9fbfd;
+      --tmk-green: #16a34a;
+      --tmk-orange: #ea580c;
+      --tmk-red: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #eef3f8 0%, #f8fafc 100%);
+      color: var(--tmk-text);
+    }
+
+    .tmk-header {
+      background: var(--tmk-white);
+      border-bottom: 4px solid var(--tmk-gold);
+      text-align: center;
+      padding: 18px 15px;
+      box-shadow: 0 2px 8px rgba(15, 76, 129, 0.08);
+    }
+
+    .tmk-header img {
+      max-width: 220px;
+      width: 100%;
+      height: auto;
+    }
+
+    .page-wrap {
+      max-width: 980px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+
+    .quiz-shell {
+      background: var(--tmk-white);
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(15, 76, 129, 0.10);
+      overflow: hidden;
+      border: 1px solid #e8eef5;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--tmk-blue) 0%, var(--tmk-blue-dark) 100%);
+      color: white;
+      padding: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      letter-spacing: 0.2px;
+    }
+
+    .infographic {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .intro {
+      background: #f1f7fc;
+      border-left: 5px solid var(--tmk-blue);
+      border-radius: 10px;
+      padding: 18px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .progress-bar {
+      background: #e5e7eb;
+      border-radius: 10px;
+      height: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, var(--tmk-green), var(--tmk-blue));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 10px;
+    }
+
+    .progress-text {
+      text-align: center;
+      font-size: 14px;
+      color: var(--tmk-muted);
+      margin-bottom: 15px;
+    }
+
+    .question {
+      background: var(--tmk-card);
+      border: 1px solid var(--tmk-border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .question.answered-correct {
+      border-left: 5px solid var(--tmk-success);
+    }
+
+    .question.answered-incorrect {
+      border-left: 5px solid var(--tmk-error);
+    }
+
+    .question-number {
+      display: inline-block;
+      background: var(--tmk-blue);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .question h3 {
+      margin: 0 0 14px;
+      font-size: 17px;
+      color: var(--tmk-blue-dark);
+      line-height: 1.5;
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      display: block;
+      background: #fff;
+      border: 2px solid #d7e3ef;
+      border-radius: 10px;
+      padding: 12px 14px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .option:hover:not(.disabled) {
+      border-color: var(--tmk-blue);
+      background: #f8fbfe;
+    }
+
+    .option.selected {
+      border-color: var(--tmk-blue);
+      background: #e8f4fc;
+    }
+
+    .option.correct {
+      border-color: var(--tmk-success);
+      background: var(--tmk-success-bg);
+    }
+
+    .option.incorrect {
+      border-color: var(--tmk-error);
+      background: var(--tmk-error-bg);
+    }
+
+    .option.disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .option input {
+      margin-right: 10px;
+      transform: translateY(1px);
+    }
+
+    .feedback {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct {
+      background: var(--tmk-success-bg);
+      border: 1px solid var(--tmk-success);
+      color: #166534;
+    }
+
+    .feedback.incorrect {
+      background: var(--tmk-error-bg);
+      border: 1px solid var(--tmk-error);
+      color: #991b1b;
+    }
+
+    .actions {
+      margin-top: 28px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 14px 22px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--tmk-blue);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--tmk-blue-dark);
+    }
+
+    .btn-primary:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: var(--tmk-blue-dark);
+      border: 1px solid #d6e0ea;
+    }
+
+    .btn-secondary:hover {
+      background: #e4ebf3;
+    }
+
+    .results {
+      display: none;
+      margin-top: 30px;
+      background: #fcfdff;
+      border: 1px solid #dbe7f3;
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .score-box {
+      background: linear-gradient(135deg, #eef6fc 0%, #f8fbff 100%);
+      border: 1px solid #d6e5f2;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .score-circle.excellent {
+      background: linear-gradient(135deg, var(--tmk-green), #22c55e);
+    }
+
+    .score-circle.good {
+      background: linear-gradient(135deg, var(--tmk-blue), #3b82f6);
+    }
+
+    .score-circle.average {
+      background: linear-gradient(135deg, var(--tmk-orange), #f97316);
+    }
+
+    .score-circle.low {
+      background: linear-gradient(135deg, var(--tmk-red), #ef4444);
+    }
+
+    .score-box h2 {
+      margin: 0 0 8px;
+      color: var(--tmk-blue-dark);
+      font-size: 24px;
+    }
+
+    .score-box p {
+      margin: 0;
+      color: var(--tmk-muted);
+      line-height: 1.5;
+    }
+
+    .result-item {
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 6px solid #cbd5e1;
+      background: white;
+      box-shadow: 0 2px 8px rgba(15, 76, 129, 0.04);
+    }
+
+    .result-item.correct {
+      border-left-color: var(--tmk-success);
+      background: var(--tmk-success-bg);
+    }
+
+    .result-item.incorrect {
+      border-left-color: var(--tmk-error);
+      background: var(--tmk-error-bg);
+    }
+
+    .result-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .result-question {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    .answer {
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: var(--tmk-success);
+    }
+
+    .user-answer {
+      font-size: 14px;
+      color: var(--tmk-error);
+      margin-bottom: 6px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid #e5edf5;
+      color: var(--tmk-muted);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .tmk-footer {
+      text-align: center;
+      color: #6b7280;
+      padding: 24px 16px 36px;
+      font-size: 14px;
+    }
+
+    .category-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .category-tag.green {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .category-tag.orange {
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    .category-tag.blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .category-tag.purple {
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding: 24px 20px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .hero h1 {
+        font-size: 22px;
+      }
+
+      .question h3 {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tmk-header">
+    <img src="assets/logo.png" alt="TMK Performances">
+  </div>
+
+  <div class="page-wrap">
+    <div class="quiz-shell">
+      <div class="hero">
+        <div class="hero-badge">Parcours @learning • Assurance • Droit des victimes</div>
+        <h1>Quiz - La Loi Badinter (1985)</h1>
+        <p>
+          <strong>Droits, Protections et Risques d'Indemnisation</strong><br>
+          Testez vos connaissances sur le régime d'indemnisation des victimes d'accidents de la circulation.
+        </p>
+      </div>
+
+      <div class="content">
+        <img src="assets/infographie-badinter.png" alt="Infographie Loi Badinter" class="infographic">
+
+        <div class="intro">
+          Ce quiz comporte <strong>20 questions</strong> tirées des notions clés de la loi Badinter.
+          Répondez à chaque question puis cliquez sur <strong>« Valider mes réponses »</strong> pour obtenir votre score et les corrections détaillées.
+        </div>
+
+        <div class="progress-text">Question <span id="answeredCount">0</span> / 20 répondues</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <form id="quizForm">
+
+          <!-- Question 1 -->
+          <div class="question" data-question="q1">
+            <span class="question-number">Question 1</span>
+            <span class="category-tag blue">Contexte historique</span>
+            <h3>Quelle est la date précise de la loi Badinter ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q1" value="a"> La loi n° 85-677 du 5 janvier 1985</label>
+              <label class="option"><input type="radio" name="q1" value="b"> La loi n° 85-677 du 5 juillet 1985</label>
+              <label class="option"><input type="radio" name="q1" value="c"> La loi n° 85-677 du 5 juillet 1975</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="question" data-question="q2">
+            <span class="question-number">Question 2</span>
+            <span class="category-tag blue">Contexte historique</span>
+            <h3>Quel était le principal inconvénient de l'indemnisation basée sur la responsabilité civile classique avant 1985 ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q2" value="a"> L'obligation pour la victime de prouver la faute du conducteur</label>
+              <label class="option"><input type="radio" name="q2" value="b"> L'absence totale d'indemnisation</label>
+              <label class="option"><input type="radio" name="q2" value="c"> Les délais trop courts imposés aux assureurs</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="question" data-question="q3">
+            <span class="question-number">Question 3</span>
+            <span class="category-tag green">Principe fondateur</span>
+            <h3>Sur quel principe fondateur repose désormais le droit à indemnisation selon la loi Badinter ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q3" value="a"> La preuve de la faute du conducteur</label>
+              <label class="option"><input type="radio" name="q3" value="b"> L'implication d'un véhicule terrestre à moteur dans l'accident</label>
+              <label class="option"><input type="radio" name="q3" value="c"> La déclaration de sinistre dans les 24 heures</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="question" data-question="q4">
+            <span class="question-number">Question 4</span>
+            <span class="category-tag green">Définitions</span>
+            <h3>Qu'est-ce qu'un Véhicule Terrestre à Moteur (VTM) ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q4" value="a"> Tout véhicule motorisé circulant au sol (voiture, moto, camion, tracteur...)</label>
+              <label class="option"><input type="radio" name="q4" value="b"> Uniquement les voitures et motos immatriculées</label>
+              <label class="option"><input type="radio" name="q4" value="c"> Tout moyen de transport y compris les vélos et trottinettes classiques</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="question" data-question="q5">
+            <span class="question-number">Question 5</span>
+            <span class="category-tag green">Champ d'application</span>
+            <h3>Un véhicule peut-il être impliqué sans avoir physiquement touché la victime ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q5" value="a"> Non, le contact physique est obligatoire</label>
+              <label class="option"><input type="radio" name="q5" value="b"> Oui, par exemple si une manœuvre brusque force un autre véhicule à freiner</label>
+              <label class="option"><input type="radio" name="q5" value="c"> Seulement si le conducteur reconnaît sa responsabilité</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 6 -->
+          <div class="question" data-question="q6">
+            <span class="question-number">Question 6</span>
+            <span class="category-tag orange">Victimes protégées</span>
+            <h3>Quelles sont les trois sous-catégories de victimes dites « non conductrices » ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q6" value="a"> Les propriétaires, les locataires et les passagers</label>
+              <label class="option"><input type="radio" name="q6" value="b"> Les piétons, les cyclistes et les passagers</label>
+              <label class="option"><input type="radio" name="q6" value="c"> Les mineurs, les seniors et les invalides</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 7 -->
+          <div class="question" data-question="q7">
+            <span class="question-number">Question 7</span>
+            <span class="category-tag orange">Faute inexcusable</span>
+            <h3>Quelle est la seule faute opposable à une victime non conductrice pour réduire son indemnisation ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q7" value="a"> La faute inexcusable si elle est la cause exclusive de l'accident</label>
+              <label class="option"><input type="radio" name="q7" value="b"> Toute imprudence même légère</label>
+              <label class="option"><input type="radio" name="q7" value="c"> Le non-port de la ceinture de sécurité</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 8 -->
+          <div class="question" data-question="q8">
+            <span class="question-number">Question 8</span>
+            <span class="category-tag green">Définitions</span>
+            <h3>Qu'est-ce qu'une faute inexcusable ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q8" value="a"> Une faute volontaire d'une exceptionnelle gravité exposant sans raison valable son auteur à un danger conscient</label>
+              <label class="option"><input type="radio" name="q8" value="b"> Une simple négligence comme oublier de mettre son clignotant</label>
+              <label class="option"><input type="radio" name="q8" value="c"> Toute infraction au code de la route</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 9 -->
+          <div class="question" data-question="q9">
+            <span class="question-number">Question 9</span>
+            <span class="category-tag orange">Protection absolue</span>
+            <h3>Quels sont les trois critères permettant de bénéficier d'une protection absolue (indemnisation automatique) ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q9" value="a"> Être salarié, être assuré, avoir un permis valide</label>
+              <label class="option"><input type="radio" name="q9" value="b"> Avoir moins de 16 ans, plus de 70 ans, ou détenir un titre d'invalidité ≥ 80%</label>
+              <label class="option"><input type="radio" name="q9" value="c"> Être piéton, cycliste ou passager</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 10 -->
+          <div class="question" data-question="q10">
+            <span class="question-number">Question 10</span>
+            <span class="category-tag purple">Régime du conducteur</span>
+            <h3>En quoi le régime des conducteurs diffère-t-il de celui des piétons lors d'un accident ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q10" value="a"> Toute faute commise par le conducteur peut limiter ou exclure son indemnisation</label>
+              <label class="option"><input type="radio" name="q10" value="b"> Le conducteur est toujours indemnisé à 100%</label>
+              <label class="option"><input type="radio" name="q10" value="c"> Seule la faute inexcusable lui est opposable</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 11 -->
+          <div class="question" data-question="q11">
+            <span class="question-number">Question 11</span>
+            <span class="category-tag purple">Délais légaux</span>
+            <h3>Quel est le délai maximum pour que l'assureur présente une offre d'indemnisation provisionnelle ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q11" value="a"> 3 mois à compter de la date de l'accident</label>
+              <label class="option"><input type="radio" name="q11" value="b"> 8 mois à compter de la date de l'accident</label>
+              <label class="option"><input type="radio" name="q11" value="c"> 12 mois à compter de la date de l'accident</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 12 -->
+          <div class="question" data-question="q12">
+            <span class="question-number">Question 12</span>
+            <span class="category-tag green">Définitions</span>
+            <h3>Qu'est-ce que la consolidation de l'état de santé ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q12" value="a"> Le moment où la victime reprend le travail</label>
+              <label class="option"><input type="radio" name="q12" value="b"> Le moment où l'état de santé est stabilisé, sans amélioration ni aggravation prévisible</label>
+              <label class="option"><input type="radio" name="q12" value="c"> La date de sortie de l'hôpital</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 13 -->
+          <div class="question" data-question="q13">
+            <span class="question-number">Question 13</span>
+            <span class="category-tag purple">Sanctions</span>
+            <h3>Quelle sanction financière s'applique à un assureur qui dépasse les délais légaux d'offre ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q13" value="a"> Une amende forfaitaire de 10 000 €</label>
+              <label class="option"><input type="radio" name="q13" value="b"> L'indemnité produit des intérêts au double du taux légal</label>
+              <label class="option"><input type="radio" name="q13" value="c"> Le retrait de l'agrément de l'assureur</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 14 -->
+          <div class="question" data-question="q14">
+            <span class="question-number">Question 14</span>
+            <span class="category-tag purple">Droits de la victime</span>
+            <h3>De combien de jours dispose une victime pour se rétracter après avoir accepté une offre d'indemnisation ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q14" value="a"> 7 jours</label>
+              <label class="option"><input type="radio" name="q14" value="b"> 15 jours</label>
+              <label class="option"><input type="radio" name="q14" value="c"> 30 jours</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 15 -->
+          <div class="question" data-question="q15">
+            <span class="question-number">Question 15</span>
+            <span class="category-tag blue">Nomenclature</span>
+            <h3>Qu'est-ce que la Nomenclature Dintilhac ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q15" value="a"> Un barème fixant le montant des indemnisations</label>
+              <label class="option"><input type="radio" name="q15" value="b"> Un référentiel listant et classant les différents postes de préjudice indemnisables</label>
+              <label class="option"><input type="radio" name="q15" value="c"> Un formulaire de déclaration de sinistre</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 16 -->
+          <div class="question" data-question="q16">
+            <span class="question-number">Question 16</span>
+            <span class="category-tag blue">Convention IRCA</span>
+            <h3>À quoi sert la convention IRCA entre assureurs ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q16" value="a"> À fixer le montant des primes d'assurance</label>
+              <label class="option"><input type="radio" name="q16" value="b"> À accélérer l'indemnisation des victimes de blessures légères</label>
+              <label class="option"><input type="radio" name="q16" value="c"> À déterminer la responsabilité pénale des conducteurs</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 17 -->
+          <div class="question" data-question="q17">
+            <span class="question-number">Question 17</span>
+            <span class="category-tag green">Champ d'application</span>
+            <h3>La loi Badinter s'applique-t-elle à un accident impliquant uniquement des piétons ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q17" value="a"> Oui, dans tous les cas</label>
+              <label class="option"><input type="radio" name="q17" value="b"> Non, il faut l'implication d'au moins un véhicule terrestre à moteur</label>
+              <label class="option"><input type="radio" name="q17" value="c"> Seulement si l'accident a lieu sur la voie publique</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 18 -->
+          <div class="question" data-question="q18">
+            <span class="question-number">Question 18</span>
+            <span class="category-tag orange">Cas pratique</span>
+            <h3>Que se passe-t-il si une victime de 8 ans commet une faute grave ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q18" value="a"> Son indemnisation est réduite proportionnellement</label>
+              <label class="option"><input type="radio" name="q18" value="b"> Elle est intégralement indemnisée car les moins de 16 ans bénéficient d'une protection absolue</label>
+              <label class="option"><input type="radio" name="q18" value="c"> L'indemnisation est refusée</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 19 -->
+          <div class="question" data-question="q19">
+            <span class="question-number">Question 19</span>
+            <span class="category-tag orange">Cas pratique</span>
+            <h3>Le défaut de port de la ceinture de sécurité par un passager supprime-t-il son droit à indemnisation ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q19" value="a"> Oui, c'est une faute grave</label>
+              <label class="option"><input type="radio" name="q19" value="b"> Non, car ce n'est pas considéré comme une faute inexcusable cause exclusive</label>
+              <label class="option"><input type="radio" name="q19" value="c"> Cela dépend de l'appréciation de l'assureur</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <!-- Question 20 -->
+          <div class="question" data-question="q20">
+            <span class="question-number">Question 20</span>
+            <span class="category-tag green">Champ d'application</span>
+            <h3>Une collision dans un parking privé ouvert au public relève-t-elle de la loi Badinter ?</h3>
+            <div class="options">
+              <label class="option"><input type="radio" name="q20" value="a"> Non, la loi ne s'applique que sur la voie publique</label>
+              <label class="option"><input type="radio" name="q20" value="b"> Oui, car c'est une voie privée ouverte à la circulation</label>
+              <label class="option"><input type="radio" name="q20" value="c"> Seulement si le parking est gratuit</label>
+            </div>
+            <div class="feedback"></div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="btn-primary" id="submitBtn" onclick="corrigerQuiz()">Valider mes réponses</button>
+            <button type="button" class="btn-secondary" onclick="reinitialiserQuiz()">Recommencer</button>
+          </div>
+        </form>
+
+        <div id="results" class="results"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tmk-footer">
+    © <span id="year"></span> TMK Performances
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const reponsesCorrectes = {
+      q1: "b",
+      q2: "a",
+      q3: "b",
+      q4: "a",
+      q5: "b",
+      q6: "b",
+      q7: "a",
+      q8: "a",
+      q9: "b",
+      q10: "a",
+      q11: "b",
+      q12: "b",
+      q13: "b",
+      q14: "b",
+      q15: "b",
+      q16: "b",
+      q17: "b",
+      q18: "b",
+      q19: "b",
+      q20: "b"
+    };
+
+    const corrections = {
+      q1: {
+        bonne: "La loi n° 85-677 du 5 juillet 1985.",
+        explication: "La loi Badinter a été promulguée le 5 juillet 1985 et porte le numéro 85-677."
+      },
+      q2: {
+        bonne: "L'obligation pour la victime de prouver la faute du conducteur.",
+        explication: "Avant 1985, la victime devait prouver la faute du conducteur pour être indemnisée, ce qui était souvent difficile et long."
+      },
+      q3: {
+        bonne: "L'implication d'un véhicule terrestre à moteur dans l'accident.",
+        explication: "La loi Badinter a remplacé la preuve de la faute par la simple notion d'implication d'un VTM."
+      },
+      q4: {
+        bonne: "Tout véhicule motorisé circulant au sol (voiture, moto, camion, tracteur...).",
+        explication: "Un VTM est tout véhicule motorisé circulant au sol. Les vélos classiques et tramways sur voies propres sont exclus."
+      },
+      q5: {
+        bonne: "Oui, par exemple si une manœuvre brusque force un autre véhicule à freiner.",
+        explication: "L'implication n'exige pas de contact physique. Un véhicule peut être impliqué s'il a joué un rôle quelconque dans l'accident."
+      },
+      q6: {
+        bonne: "Les piétons, les cyclistes et les passagers.",
+        explication: "Ces trois catégories bénéficient d'une protection renforcée en tant que victimes non conductrices."
+      },
+      q7: {
+        bonne: "La faute inexcusable si elle est la cause exclusive de l'accident.",
+        explication: "Seule une faute inexcusable, cause exclusive de l'accident, peut réduire ou supprimer l'indemnisation d'une victime non conductrice."
+      },
+      q8: {
+        bonne: "Une faute volontaire d'une exceptionnelle gravité exposant sans raison valable son auteur à un danger conscient.",
+        explication: "La faute inexcusable est définie strictement par la jurisprudence : elle doit être d'une gravité exceptionnelle."
+      },
+      q9: {
+        bonne: "Avoir moins de 16 ans, plus de 70 ans, ou détenir un titre d'invalidité ≥ 80%.",
+        explication: "Ces victimes « super-protégées » sont indemnisées automatiquement, sauf en cas de recherche volontaire du dommage."
+      },
+      q10: {
+        bonne: "Toute faute commise par le conducteur peut limiter ou exclure son indemnisation.",
+        explication: "Contrairement aux piétons/passagers, le conducteur voit sa propre faute lui être opposable pour réduire ou exclure son droit."
+      },
+      q11: {
+        bonne: "8 mois à compter de la date de l'accident.",
+        explication: "L'assureur doit présenter une offre provisionnelle dans les 8 mois suivant l'accident."
+      },
+      q12: {
+        bonne: "Le moment où l'état de santé est stabilisé, sans amélioration ni aggravation prévisible.",
+        explication: "La consolidation marque la fin de la période de soins et permet de calculer les préjudices définitifs."
+      },
+      q13: {
+        bonne: "L'indemnité produit des intérêts au double du taux légal.",
+        explication: "En cas de retard, les intérêts sont doublés de plein droit comme sanction pour l'assureur."
+      },
+      q14: {
+        bonne: "15 jours.",
+        explication: "La victime dispose d'un délai de rétractation de 15 jours après acceptation de l'offre."
+      },
+      q15: {
+        bonne: "Un référentiel listant et classant les différents postes de préjudice indemnisables.",
+        explication: "La Nomenclature Dintilhac standardise les postes de préjudice (patrimoniaux et extra-patrimoniaux)."
+      },
+      q16: {
+        bonne: "À accélérer l'indemnisation des victimes de blessures légères.",
+        explication: "La convention IRCA permet un règlement direct par l'assureur de la victime pour les blessures légères (AIPP ≤ 5%)."
+      },
+      q17: {
+        bonne: "Non, il faut l'implication d'au moins un véhicule terrestre à moteur.",
+        explication: "La loi Badinter ne s'applique que si un VTM est impliqué dans l'accident."
+      },
+      q18: {
+        bonne: "Elle est intégralement indemnisée car les moins de 16 ans bénéficient d'une protection absolue.",
+        explication: "Les victimes de moins de 16 ans ne peuvent se voir opposer aucune faute, sauf la recherche volontaire du dommage."
+      },
+      q19: {
+        bonne: "Non, car ce n'est pas considéré comme une faute inexcusable cause exclusive.",
+        explication: "Le défaut de ceinture n'est pas une faute inexcusable au sens de la jurisprudence."
+      },
+      q20: {
+        bonne: "Oui, car c'est une voie privée ouverte à la circulation.",
+        explication: "La loi Badinter s'applique sur les voies privées ouvertes à la circulation, comme les parkings de supermarchés."
+      }
+    };
+
+    // Mettre à jour la barre de progression
+    function updateProgress() {
+      let answered = 0;
+      const total = Object.keys(reponsesCorrectes).length;
+      
+      for (let q in reponsesCorrectes) {
+        if (document.querySelector(`input[name="${q}"]:checked`)) {
+          answered++;
+        }
+      }
+      
+      document.getElementById('answeredCount').textContent = answered;
+      document.getElementById('progressFill').style.width = `${(answered / total) * 100}%`;
+    }
+
+    // Écouter les changements sur les boutons radio
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', updateProgress);
+    });
+
+    function corrigerQuiz() {
+      let score = 0;
+      const total = Object.keys(reponsesCorrectes).length;
+      let html = "";
+
+      for (let question in reponsesCorrectes) {
+        const questionDiv = document.querySelector(`[data-question="${question}"]`);
+        const reponseUtilisateur = document.querySelector(`input[name="${question}"]:checked`);
+        const estCorrect = reponseUtilisateur && reponseUtilisateur.value === reponsesCorrectes[question];
+        const feedback = questionDiv.querySelector('.feedback');
+
+        if (estCorrect) {
+          score++;
+          questionDiv.classList.add('answered-correct');
+          feedback.className = 'feedback show correct';
+          feedback.innerHTML = `<strong>✓ Correct !</strong> ${corrections[question].explication}`;
+        } else {
+          questionDiv.classList.add('answered-incorrect');
+          feedback.className = 'feedback show incorrect';
+          feedback.innerHTML = `<strong>✗ Incorrect.</strong> La bonne réponse était : ${corrections[question].bonne}<br>${corrections[question].explication}`;
+        }
+
+        // Désactiver les options
+        questionDiv.querySelectorAll('.option').forEach(opt => {
+          opt.classList.add('disabled');
+          const input = opt.querySelector('input');
+          if (input.value === reponsesCorrectes[question]) {
+            opt.classList.add('correct');
+          } else if (reponseUtilisateur && input.value === reponseUtilisateur.value && !estCorrect) {
+            opt.classList.add('incorrect');
+          }
+        });
+
+        // Ajouter au résumé
+        const questionText = questionDiv.querySelector('h3').textContent;
+        html += `
+          <div class="result-item ${estCorrect ? 'correct' : 'incorrect'}">
+            <div class="result-title">${question.toUpperCase()} — ${estCorrect ? '✓ Correct' : '✗ Incorrect'}</div>
+            <div class="result-question">${questionText}</div>
+            <div class="answer">Bonne réponse : ${corrections[question].bonne}</div>
+            ${!estCorrect && reponseUtilisateur ? `<div class="user-answer">Votre réponse : ${reponseUtilisateur.parentElement.textContent.trim()}</div>` : ''}
+          </div>
+        `;
+      }
+
+      const pourcentage = Math.round((score / total) * 100);
+
+      let appreciation = "";
+      let scoreClass = "";
+      if (pourcentage >= 85) {
+        appreciation = "Excellent ! Vous maîtrisez très bien les principes de la loi Badinter.";
+        scoreClass = "excellent";
+      } else if (pourcentage >= 70) {
+        appreciation = "Bon niveau ! Quelques points restent à consolider.";
+        scoreClass = "good";
+      } else if (pourcentage >= 50) {
+        appreciation = "Des bases à renforcer. Revoyez les notions clés du module.";
+        scoreClass = "average";
+      } else {
+        appreciation = "Ce quiz met en évidence plusieurs notions à approfondir pendant la formation.";
+        scoreClass = "low";
+      }
+
+      document.getElementById("results").innerHTML = `
+        <div class="score-box">
+          <div class="score-circle ${scoreClass}">${score}/${total}</div>
+          <h2>Votre score : ${pourcentage}%</h2>
+          <p>${appreciation}</p>
+        </div>
+        ${html}
+        <div class="footer-note">
+          Ce quiz permet d'évaluer vos connaissances sur la loi Badinter. 
+          Consultez l'infographie ci-dessus pour réviser les points clés.
+        </div>
+      `;
+
+      document.getElementById("results").style.display = "block";
+      document.getElementById("submitBtn").disabled = true;
+
+      window.scrollTo({
+        top: document.getElementById("results").offsetTop - 20,
+        behavior: "smooth"
+      });
+    }
+
+    function reinitialiserQuiz() {
+      document.getElementById("quizForm").reset();
+      document.getElementById("results").style.display = "none";
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("submitBtn").disabled = false;
+      
+      // Réinitialiser les styles
+      document.querySelectorAll('.question').forEach(q => {
+        q.classList.remove('answered-correct', 'answered-incorrect');
+      });
+      document.querySelectorAll('.option').forEach(opt => {
+        opt.classList.remove('disabled', 'correct', 'incorrect', 'selected');
+      });
+      document.querySelectorAll('.feedback').forEach(f => {
+        f.className = 'feedback';
+        f.innerHTML = '';
+      });
+      
+      updateProgress();
+      
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+  </script>
+</body>
+</html>
