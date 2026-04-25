@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz - La Loi Badinter (1985)</title>
+  <title>Quiz — La Loi Badinter (1985)</title>
   <style>
     :root {
       --tmk-blue: #0f4c81;
@@ -23,9 +23,7 @@
       --tmk-red: #dc2626;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -46,6 +44,17 @@
       max-width: 220px;
       width: 100%;
       height: auto;
+    }
+
+    .fictif-banner {
+      background: #b91c1c;
+      color: white;
+      text-align: center;
+      padding: 7px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
     }
 
     .page-wrap {
@@ -93,17 +102,7 @@
       letter-spacing: 0.2px;
     }
 
-    .infographic {
-      width: 100%;
-      max-width: 100%;
-      border-radius: 12px;
-      margin: 20px 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .content {
-      padding: 30px;
-    }
+    .content { padding: 30px; }
 
     .intro {
       background: #f1f7fc;
@@ -145,13 +144,8 @@
       margin-bottom: 20px;
     }
 
-    .question.answered-correct {
-      border-left: 5px solid var(--tmk-success);
-    }
-
-    .question.answered-incorrect {
-      border-left: 5px solid var(--tmk-error);
-    }
+    .question.answered-correct { border-left: 5px solid var(--tmk-success); }
+    .question.answered-incorrect { border-left: 5px solid var(--tmk-error); }
 
     .question-number {
       display: inline-block;
@@ -162,6 +156,7 @@
       font-size: 12px;
       font-weight: bold;
       margin-bottom: 12px;
+      margin-right: 6px;
     }
 
     .question h3 {
@@ -171,10 +166,7 @@
       line-height: 1.5;
     }
 
-    .options {
-      display: grid;
-      gap: 10px;
-    }
+    .options { display: grid; gap: 10px; }
 
     .option {
       display: block;
@@ -191,25 +183,10 @@
       background: #f8fbfe;
     }
 
-    .option.selected {
-      border-color: var(--tmk-blue);
-      background: #e8f4fc;
-    }
-
-    .option.correct {
-      border-color: var(--tmk-success);
-      background: var(--tmk-success-bg);
-    }
-
-    .option.incorrect {
-      border-color: var(--tmk-error);
-      background: var(--tmk-error-bg);
-    }
-
-    .option.disabled {
-      cursor: default;
-      opacity: 0.7;
-    }
+    .option.selected { border-color: var(--tmk-blue); background: #e8f4fc; }
+    .option.correct { border-color: var(--tmk-success); background: var(--tmk-success-bg); }
+    .option.incorrect { border-color: var(--tmk-error); background: var(--tmk-error-bg); }
+    .option.disabled { cursor: default; opacity: 0.7; }
 
     .option input {
       margin-right: 10px;
@@ -224,17 +201,12 @@
       line-height: 1.5;
       display: none;
     }
-
-    .feedback.show {
-      display: block;
-    }
-
+    .feedback.show { display: block; }
     .feedback.correct {
       background: var(--tmk-success-bg);
       border: 1px solid var(--tmk-success);
       color: #166534;
     }
-
     .feedback.incorrect {
       background: var(--tmk-error-bg);
       border: 1px solid var(--tmk-error);
@@ -257,30 +229,21 @@
       cursor: pointer;
       transition: 0.2s ease;
     }
-
-    .btn-primary {
-      background: var(--tmk-blue);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: var(--tmk-blue-dark);
-    }
-
-    .btn-primary:disabled {
-      background: #9ca3af;
-      cursor: not-allowed;
-    }
-
+    .btn-primary { background: var(--tmk-blue); color: white; }
+    .btn-primary:hover { background: var(--tmk-blue-dark); }
+    .btn-primary:disabled { background: #9ca3af; cursor: not-allowed; }
     .btn-secondary {
       background: #eef2f7;
       color: var(--tmk-blue-dark);
       border: 1px solid #d6e0ea;
     }
+    .btn-secondary:hover { background: #e4ebf3; }
 
-    .btn-secondary:hover {
-      background: #e4ebf3;
+    .btn-export {
+      background: var(--tmk-success);
+      color: white;
     }
+    .btn-export:hover { background: #166534; }
 
     .results {
       display: none;
@@ -312,34 +275,13 @@
       font-weight: bold;
       color: white;
     }
+    .score-circle.excellent { background: linear-gradient(135deg, var(--tmk-green), #22c55e); }
+    .score-circle.good { background: linear-gradient(135deg, var(--tmk-blue), #3b82f6); }
+    .score-circle.average { background: linear-gradient(135deg, var(--tmk-orange), #f97316); }
+    .score-circle.low { background: linear-gradient(135deg, var(--tmk-red), #ef4444); }
 
-    .score-circle.excellent {
-      background: linear-gradient(135deg, var(--tmk-green), #22c55e);
-    }
-
-    .score-circle.good {
-      background: linear-gradient(135deg, var(--tmk-blue), #3b82f6);
-    }
-
-    .score-circle.average {
-      background: linear-gradient(135deg, var(--tmk-orange), #f97316);
-    }
-
-    .score-circle.low {
-      background: linear-gradient(135deg, var(--tmk-red), #ef4444);
-    }
-
-    .score-box h2 {
-      margin: 0 0 8px;
-      color: var(--tmk-blue-dark);
-      font-size: 24px;
-    }
-
-    .score-box p {
-      margin: 0;
-      color: var(--tmk-muted);
-      line-height: 1.5;
-    }
+    .score-box h2 { margin: 0 0 8px; color: var(--tmk-blue-dark); font-size: 24px; }
+    .score-box p { margin: 0; color: var(--tmk-muted); line-height: 1.5; }
 
     .result-item {
       border-radius: 12px;
@@ -349,39 +291,20 @@
       background: white;
       box-shadow: 0 2px 8px rgba(15, 76, 129, 0.04);
     }
+    .result-item.correct { border-left-color: var(--tmk-success); background: var(--tmk-success-bg); }
+    .result-item.incorrect { border-left-color: var(--tmk-error); background: var(--tmk-error-bg); }
 
-    .result-item.correct {
-      border-left-color: var(--tmk-success);
-      background: var(--tmk-success-bg);
-    }
-
-    .result-item.incorrect {
-      border-left-color: var(--tmk-error);
-      background: var(--tmk-error-bg);
-    }
-
-    .result-title {
-      font-weight: bold;
-      margin-bottom: 8px;
-      color: #111827;
-    }
-
-    .result-question {
-      font-size: 15px;
-      margin-bottom: 8px;
+    .result-title { font-weight: bold; margin-bottom: 8px; color: #111827; }
+    .result-question { font-size: 15px; margin-bottom: 8px; color: #374151; }
+    .answer { font-weight: bold; margin-bottom: 6px; color: var(--tmk-success); }
+    .user-answer { font-size: 14px; color: var(--tmk-error); margin-bottom: 6px; }
+    .result-explication {
+      font-size: 13px;
       color: #374151;
-    }
-
-    .answer {
-      font-weight: bold;
-      margin-bottom: 6px;
-      color: var(--tmk-success);
-    }
-
-    .user-answer {
-      font-size: 14px;
-      color: var(--tmk-error);
-      margin-bottom: 6px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #cbd5e1;
+      line-height: 1.5;
     }
 
     .footer-note {
@@ -408,47 +331,253 @@
       font-weight: bold;
       margin-bottom: 10px;
     }
+    .category-tag.green { background: #dcfce7; color: #166534; }
+    .category-tag.orange { background: #ffedd5; color: #9a3412; }
+    .category-tag.blue { background: #dbeafe; color: #1e40af; }
+    .category-tag.purple { background: #f3e8ff; color: #6b21a8; }
+    .category-tag.red { background: #fee2e2; color: #991b1b; }
 
-    .category-tag.green {
-      background: #dcfce7;
-      color: #166534;
+    .scenario-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 5px solid #d97706;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 22px;
+      font-size: 14px;
+      line-height: 1.6;
     }
-
-    .category-tag.orange {
-      background: #ffedd5;
-      color: #9a3412;
-    }
-
-    .category-tag.blue {
-      background: #dbeafe;
-      color: #1e40af;
-    }
-
-    .category-tag.purple {
-      background: #f3e8ff;
-      color: #6b21a8;
-    }
+    .scenario-box strong { color: #92400e; }
 
     @media (max-width: 700px) {
-      .hero {
-        padding: 24px 20px;
+      .hero { padding: 24px 20px; }
+      .content { padding: 20px; }
+      .hero h1 { font-size: 22px; }
+      .question h3 { font-size: 16px; }
+    }
+
+    /* ═══════ STYLES POUR L'IMPRESSION PDF ═══════ */
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm 14mm 14mm 14mm;
       }
+
+      body {
+        background: white !important;
+        font-size: 10pt;
+        color: #000;
+      }
+
+      /* Cacher les éléments non pertinents pour le PDF */
+      .fictif-banner,
+      .tmk-header,
+      .scenario-box,
+      .intro,
+      .progress-text,
+      .progress-bar,
+      .actions,
+      #exportHelp,
+      #exportDone,
+      #quizForm > .question,
+      .tmk-footer {
+        display: none !important;
+      }
+
+      /* La structure de la page */
+      .page-wrap {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .quiz-shell {
+        box-shadow: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+      }
+
+      /* En-tête PDF dédié injecté par JS */
+      .pdf-header {
+        display: block !important;
+        text-align: center;
+        border-bottom: 2px solid #c8a96b;
+        padding-bottom: 6mm;
+        margin-bottom: 6mm;
+      }
+      .pdf-header .brand {
+        font-size: 16pt;
+        font-weight: bold;
+        color: #0f4c81;
+        letter-spacing: 0.5pt;
+      }
+      .pdf-header .module {
+        font-size: 9pt;
+        color: #6b7280;
+        margin-top: 2px;
+      }
+      .pdf-header .doc-type {
+        display: inline-block;
+        margin-top: 5px;
+        background: #b91c1c;
+        color: white !important;
+        padding: 2px 12px;
+        border-radius: 3px;
+        font-size: 7.5pt;
+        font-weight: bold;
+        letter-spacing: 0.8pt;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* En-tête du quiz (la zone bleue) */
+      .hero {
+        background: #0f4c81 !important;
+        color: white !important;
+        padding: 10px 14px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        margin-bottom: 6mm;
+        page-break-inside: avoid;
+      }
+      .hero h1 { font-size: 14pt !important; margin: 0 0 4px !important; }
+      .hero p { font-size: 9pt !important; margin: 0 !important; }
+      .hero p strong { color: white !important; }
+      .hero-badge { font-size: 7.5pt !important; margin-bottom: 6px; padding: 3px 9px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); }
 
       .content {
-        padding: 20px;
+        padding: 0 !important;
       }
 
-      .hero h1 {
-        font-size: 22px;
+      /* Bloc meta injecté dynamiquement */
+      .pdf-meta {
+        display: block !important;
+        background: #f1f7fc !important;
+        border: 1px solid #d9e2ec;
+        border-left: 4px solid #0f4c81;
+        border-radius: 4px;
+        padding: 8px 12px;
+        margin-bottom: 6mm;
+        font-size: 9pt;
+        line-height: 1.6;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        page-break-inside: avoid;
+      }
+      .pdf-meta strong { color: #0f4c81; }
+
+      /* Box de score */
+      .score-box {
+        page-break-inside: avoid;
+        background: #eef6fc !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding: 12px !important;
+        margin-bottom: 6mm !important;
+        border: 1px solid #d6e5f2;
+        border-radius: 6px;
+      }
+      .score-circle {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 16pt !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .score-box h2 { font-size: 13pt !important; margin: 8px 0 4px; }
+      .score-box p { font-size: 9.5pt !important; }
+
+      .results {
+        display: block !important;
+        background: white !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
       }
 
-      .question h3 {
-        font-size: 16px;
+      /* Titre des détails */
+      .results-detail-title {
+        display: block !important;
+        font-size: 11pt;
+        font-weight: bold;
+        color: #0f4c81;
+        margin: 6mm 0 3mm;
+        padding-bottom: 2mm;
+        border-bottom: 1px solid #c8a96b;
+      }
+
+      .result-item {
+        page-break-inside: avoid;
+        margin-bottom: 3mm !important;
+        padding: 8px 10px !important;
+        box-shadow: none !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        border-radius: 4px;
+      }
+
+      .result-item.correct { background: #eefaf1 !important; border-left: 4px solid #1f7a3e !important; }
+      .result-item.incorrect { background: #fef3f2 !important; border-left: 4px solid #b42318 !important; }
+
+      .result-title { font-size: 9.5pt !important; margin-bottom: 3px !important; }
+      .result-question { font-size: 9.5pt !important; margin-bottom: 4px !important; }
+      .answer { font-size: 9pt !important; margin-bottom: 3px !important; }
+      .user-answer { font-size: 9pt !important; margin-bottom: 3px !important; }
+      .result-explication {
+        font-size: 8.5pt !important;
+        margin-top: 4px !important;
+        padding-top: 4px !important;
+        line-height: 1.4 !important;
+      }
+
+      /* Bandeau de pied de page imprimé en bas du dernier bloc */
+      .pdf-footer {
+        display: block !important;
+        text-align: center;
+        margin-top: 6mm;
+        padding-top: 3mm;
+        border-top: 1px solid #b91c1c;
+        font-size: 8pt;
+        color: #b91c1c;
+        font-weight: bold;
+      }
+      .pdf-footer .sub {
+        font-weight: normal;
+        font-style: italic;
+        font-size: 7pt;
+        color: #6b7280;
+        margin-top: 1mm;
+      }
+
+      /* Note de bas de page (déjà existante) */
+      .footer-note {
+        font-size: 7.5pt !important;
+        margin-top: 3mm !important;
+      }
+
+      /* Filigrane fictif - un seul, central */
+      body::before {
+        content: "DOCUMENT FICTIF";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 50pt;
+        font-weight: bold;
+        color: rgba(220, 38, 38, 0.06);
+        z-index: -1;
+        pointer-events: none;
+        white-space: nowrap;
       }
     }
+
+    /* Cacher les éléments PDF en mode écran */
+    .pdf-meta, .pdf-header, .pdf-footer, .results-detail-title { display: none; }
   </style>
 </head>
 <body>
+
+  <div class="fictif-banner">Cas pédagogique fictif — Ne constitue pas un document officiel</div>
 
   <div class="tmk-header">
     <img src="assets/logo.png" alt="TMK Performances">
@@ -458,16 +587,20 @@
     <div class="quiz-shell">
       <div class="hero">
         <div class="hero-badge">Parcours @learning • Assurance • Droit des victimes</div>
-        <h1>Quiz - La Loi Badinter (1985)</h1>
+        <h1>Quiz — La Loi Badinter (1985)</h1>
         <p>
-          <strong>Droits, Protections et Risques d'Indemnisation</strong><br>
-          Testez vos connaissances sur le régime d'indemnisation des victimes d'accidents de la circulation.
+          <strong>Droits, protections et risques d'indemnisation</strong>
         </p>
       </div>
 
+      <div class="content">
+
+        <div class="scenario-box">
+          <strong>Bienvenue !</strong> Ce quiz porte sur les notions clés de la <strong>loi du 5 juillet 1985</strong>, dite loi Badinter, qui régit l'indemnisation des victimes d'accidents de la circulation. Il vous permettra de tester votre maîtrise du régime applicable, des protections accordées aux différentes catégories de victimes, et des délais imposés aux assureurs.
+        </div>
+
         <div class="intro">
-          Ce quiz comporte <strong>20 questions</strong> tirées des notions clés de la loi Badinter.
-          Répondez à chaque question puis cliquez sur <strong>« Valider mes réponses »</strong> pour obtenir votre score et les corrections détaillées.
+          Ce quiz comporte <strong>20 questions</strong> tirées des notions clés de la loi Badinter. Répondez à chaque question puis cliquez sur <strong>« Valider mes réponses »</strong> pour obtenir votre score, votre note sur 20 et les corrections détaillées.
         </div>
 
         <div class="progress-text">Question <span id="answeredCount">0</span> / 20 répondues</div>
@@ -739,8 +872,17 @@
 
           <div class="actions">
             <button type="button" class="btn-primary" id="submitBtn" onclick="corrigerQuiz()">Valider mes réponses</button>
-            <button type="button" class="btn-secondary" onclick="reinitialiserQuiz()">Recommencer</button>
+            <button type="button" class="btn-secondary" id="resetBtn" onclick="reinitialiserQuiz()">Recommencer</button>
+            <button type="button" class="btn-export" id="exportBtn" onclick="exporterPDF()" style="display:none;" title="Ouvre le dialogue d'impression — choisissez « Enregistrer en PDF »">📄 Télécharger en PDF</button>
           </div>
+          <p id="exportHelp" style="display:none; font-size: 12px; color: #6b7280; margin-top: 10px; font-style: italic;">
+            💡 Le bouton ci-dessus ouvre la boîte de dialogue d'impression de votre navigateur.
+            Choisissez <strong>« Enregistrer au format PDF »</strong> ou <strong>« Microsoft Print to PDF »</strong> comme imprimante de destination.<br>
+            ⚠️ <strong>Important :</strong> le PDF ne peut être généré qu'<strong>une seule fois</strong> par session.
+          </p>
+          <p id="exportDone" style="display:none; font-size: 13px; color: #166534; margin-top: 10px; font-weight: 600; background: #dcfce7; padding: 10px 14px; border-radius: 8px; border-left: 4px solid #166534;">
+            ✓ <strong>PDF généré.</strong> Pour des raisons pédagogiques, il n'est plus possible de regénérer un nouveau PDF dans cette session, même en recommençant le quiz. Vous pouvez néanmoins refaire le quiz pour vous entraîner — vos résultats s'afficheront à l'écran.
+          </p>
         </form>
 
         <div id="results" class="results"></div>
@@ -749,7 +891,7 @@
   </div>
 
   <div class="tmk-footer">
-    © <span id="year"></span> TMK Performances
+    © <span id="year"></span> TMK Performances — Formation Gestion des Sinistres Corporels
   </div>
 
   <script>
@@ -775,122 +917,123 @@
       q17: "b",
       q18: "b",
       q19: "b",
-      q20: "b"
+      q20: "b",
     };
 
     const corrections = {
       q1: {
-        bonne: "La loi n° 85-677 du 5 juillet 1985.",
-        explication: "La loi Badinter a été promulguée le 5 juillet 1985 et porte le numéro 85-677."
+        bonne: "La loi n° 85-677 du 5 juillet 1985",
+        explication: "La loi Badinter a été promulguée le <b>5 juillet 1985</b> et porte le numéro 85-677. Elle tire son nom de Robert Badinter, alors Garde des Sceaux, et a profondément réformé le régime d'indemnisation des victimes d'accidents de la circulation."
       },
       q2: {
-        bonne: "L'obligation pour la victime de prouver la faute du conducteur.",
-        explication: "Avant 1985, la victime devait prouver la faute du conducteur pour être indemnisée, ce qui était souvent difficile et long."
+        bonne: "L'obligation pour la victime de prouver la faute du conducteur",
+        explication: "Avant 1985, la victime devait <b>prouver la faute du conducteur</b> pour être indemnisée — démarche souvent longue, coûteuse et incertaine. La loi Badinter a inversé ce rapport en instituant une présomption de responsabilité fondée sur la simple implication d'un véhicule."
       },
       q3: {
-        bonne: "L'implication d'un véhicule terrestre à moteur dans l'accident.",
-        explication: "La loi Badinter a remplacé la preuve de la faute par la simple notion d'implication d'un VTM."
+        bonne: "L'implication d'un véhicule terrestre à moteur dans l'accident",
+        explication: "La loi Badinter a remplacé la preuve de la faute par la simple notion d'<b>implication d'un VTM</b>. Dès lors qu'un véhicule terrestre à moteur est impliqué dans l'accident, la victime entre dans le champ de la loi, sans avoir à démontrer une quelconque faute."
       },
       q4: {
-        bonne: "Tout véhicule motorisé circulant au sol (voiture, moto, camion, tracteur...).",
-        explication: "Un VTM est tout véhicule motorisé circulant au sol. Les vélos classiques et tramways sur voies propres sont exclus."
+        bonne: "Tout véhicule motorisé circulant au sol (voiture, moto, camion, tracteur...)",
+        explication: "Un <b>VTM</b> est tout véhicule motorisé circulant au sol : voiture, moto, camion, tracteur, engin agricole, chariot élévateur… Sont <b>exclus</b> les vélos classiques (sans moteur), les trottinettes non électriques, les tramways circulant sur voies propres, et les trains."
       },
       q5: {
-        bonne: "Oui, par exemple si une manœuvre brusque force un autre véhicule à freiner.",
-        explication: "L'implication n'exige pas de contact physique. Un véhicule peut être impliqué s'il a joué un rôle quelconque dans l'accident."
+        bonne: "Oui, par exemple si une manœuvre brusque force un autre véhicule à freiner",
+        explication: "L'<b>implication</b> n'exige pas de contact physique. Un véhicule peut être impliqué dès lors qu'il a joué un rôle quelconque dans la survenance de l'accident : manœuvre brusque, freinage forçant un autre conducteur à réagir, présence sur la chaussée provoquant un évitement, etc."
       },
       q6: {
-        bonne: "Les piétons, les cyclistes et les passagers.",
-        explication: "Ces trois catégories bénéficient d'une protection renforcée en tant que victimes non conductrices."
+        bonne: "Les piétons, les cyclistes et les passagers",
+        explication: "Les <b>piétons, cyclistes et passagers</b> sont les trois catégories de victimes non conductrices au sens de la loi Badinter. Elles bénéficient d'une <b>protection renforcée</b> : seule une faute inexcusable, cause exclusive de l'accident, peut leur être opposée."
       },
       q7: {
-        bonne: "La faute inexcusable si elle est la cause exclusive de l'accident.",
-        explication: "Seule une faute inexcusable, cause exclusive de l'accident, peut réduire ou supprimer l'indemnisation d'une victime non conductrice."
+        bonne: "La faute inexcusable si elle est la cause exclusive de l'accident",
+        explication: "Seule une <b>faute inexcusable, cause exclusive de l'accident</b>, peut réduire ou supprimer l'indemnisation d'une victime non conductrice. C'est une exception très étroite, rarement retenue par les juges."
       },
       q8: {
-        bonne: "Une faute volontaire d'une exceptionnelle gravité exposant sans raison valable son auteur à un danger conscient.",
-        explication: "La faute inexcusable est définie strictement par la jurisprudence : elle doit être d'une gravité exceptionnelle."
+        bonne: "Une faute volontaire d'une exceptionnelle gravité exposant sans raison valable son auteur à un danger conscient",
+        explication: "La <b>faute inexcusable</b> est définie strictement par la jurisprudence : il faut une faute <b>volontaire</b>, d'une <b>exceptionnelle gravité</b>, qui <b>expose sans raison valable</b> son auteur à un <b>danger dont il aurait dû avoir conscience</b>. Exemple typique : traverser une autoroute à pied de nuit dans le brouillard."
       },
       q9: {
-        bonne: "Avoir moins de 16 ans, plus de 70 ans, ou détenir un titre d'invalidité ≥ 80%.",
-        explication: "Ces victimes « super-protégées » sont indemnisées automatiquement, sauf en cas de recherche volontaire du dommage."
+        bonne: "Avoir moins de 16 ans, plus de 70 ans, ou détenir un titre d'invalidité ≥ 80%",
+        explication: "Les victimes <b>« super-protégées »</b> bénéficient d'une indemnisation automatique, sauf en cas de recherche volontaire du dommage : <b>moins de 16 ans</b>, <b>plus de 70 ans</b>, ou titulaires d'un <b>titre d'invalidité ≥ 80 %</b>. Aucune faute, même inexcusable, ne peut leur être opposée."
       },
       q10: {
-        bonne: "Toute faute commise par le conducteur peut limiter ou exclure son indemnisation.",
-        explication: "Contrairement aux piétons/passagers, le conducteur voit sa propre faute lui être opposable pour réduire ou exclure son droit."
+        bonne: "Toute faute commise par le conducteur peut limiter ou exclure son indemnisation",
+        explication: "Contrairement aux piétons, cyclistes et passagers, le <b>conducteur</b> voit sa propre faute lui être opposable. L'article 4 de la loi Badinter permet de <b>limiter ou exclure</b> son indemnisation en cas de faute simple (excès de vitesse, somnolence, non-respect d'une priorité, etc.)."
       },
       q11: {
-        bonne: "8 mois à compter de la date de l'accident.",
-        explication: "L'assureur doit présenter une offre provisionnelle dans les 8 mois suivant l'accident."
+        bonne: "8 mois à compter de la date de l'accident",
+        explication: "L'article L.211-9 du Code des assurances impose à l'assureur de présenter une <b>offre provisionnelle dans les 8 mois</b> suivant l'accident. Le non-respect de ce délai entraîne une sanction automatique : doublement du taux d'intérêt légal sur l'indemnité due."
       },
       q12: {
-        bonne: "Le moment où l'état de santé est stabilisé, sans amélioration ni aggravation prévisible.",
-        explication: "La consolidation marque la fin de la période de soins et permet de calculer les préjudices définitifs."
+        bonne: "Le moment où l'état de santé est stabilisé, sans amélioration ni aggravation prévisible",
+        explication: "La <b>consolidation</b> est le moment où l'état de santé est stabilisé, sans amélioration ni aggravation prévisible. Elle marque la fin de la période de soins actifs et permet d'évaluer définitivement les préjudices permanents (DFP, préjudice professionnel, esthétique, etc.)."
       },
       q13: {
-        bonne: "L'indemnité produit des intérêts au double du taux légal.",
-        explication: "En cas de retard, les intérêts sont doublés de plein droit comme sanction pour l'assureur."
+        bonne: "L'indemnité produit des intérêts au double du taux légal",
+        explication: "En cas de retard, l'<b>indemnité produit des intérêts au double du taux légal</b> de plein droit (art. L.211-13 C. ass.). Cette sanction automatique pèse lourd financièrement et incite fortement les assureurs à respecter le délai des 8 mois."
       },
       q14: {
-        bonne: "15 jours.",
-        explication: "La victime dispose d'un délai de rétractation de 15 jours après acceptation de l'offre."
+        bonne: "15 jours",
+        explication: "L'article L.211-16 du Code des assurances accorde à la victime un <b>délai de rétractation de 15 jours</b> à compter de la date d'acceptation d'une offre. Cette protection lui permet de se prémunir contre une acceptation précipitée."
       },
       q15: {
-        bonne: "Un référentiel listant et classant les différents postes de préjudice indemnisables.",
-        explication: "La Nomenclature Dintilhac standardise les postes de préjudice (patrimoniaux et extra-patrimoniaux)."
+        bonne: "Un référentiel listant et classant les différents postes de préjudice indemnisables",
+        explication: "La <b>Nomenclature Dintilhac</b> (du nom du magistrat qui a présidé le groupe de travail) est un référentiel qui standardise les <b>postes de préjudice</b> indemnisables : préjudices patrimoniaux (DFT, PGPA, frais médicaux…) et extra-patrimoniaux (souffrances endurées, préjudice esthétique, préjudice d'agrément…). Ce n'est pas un barème : il n'impose pas de montants."
       },
       q16: {
-        bonne: "À accélérer l'indemnisation des victimes de blessures légères.",
-        explication: "La convention IRCA permet un règlement direct par l'assureur de la victime pour les blessures légères (AIPP ≤ 5%)."
+        bonne: "À accélérer l'indemnisation des victimes de blessures légères",
+        explication: "La <b>convention IRCA</b> (Indemnisation et Recours Corporels Automobile) est une convention inter-assureurs qui permet un règlement <b>direct par l'assureur de la victime</b> pour les blessures légères (AIPP ≤ 5 %). Elle accélère significativement l'indemnisation en évitant la complexité des recours entre compagnies."
       },
       q17: {
-        bonne: "Non, il faut l'implication d'au moins un véhicule terrestre à moteur.",
-        explication: "La loi Badinter ne s'applique que si un VTM est impliqué dans l'accident."
+        bonne: "Non, il faut l'implication d'au moins un véhicule terrestre à moteur",
+        explication: "La loi Badinter ne s'applique que si <b>au moins un VTM est impliqué</b> dans l'accident. Un accident entre deux piétons, ou entre un piéton et un cycliste seul, relève du droit commun de la responsabilité civile (articles 1240 et suivants du Code civil)."
       },
       q18: {
-        bonne: "Elle est intégralement indemnisée car les moins de 16 ans bénéficient d'une protection absolue.",
-        explication: "Les victimes de moins de 16 ans ne peuvent se voir opposer aucune faute, sauf la recherche volontaire du dommage."
+        bonne: "Elle est intégralement indemnisée car les moins de 16 ans bénéficient d'une protection absolue",
+        explication: "Les victimes de <b>moins de 16 ans</b> bénéficient de la protection absolue : aucune faute, même grave ou inexcusable, ne peut leur être opposée. Seule la <b>recherche volontaire du dommage</b> (suicide, auto-mutilation) pourrait théoriquement exclure l'indemnisation — hypothèse rarissime pour un mineur."
       },
       q19: {
-        bonne: "Non, car ce n'est pas considéré comme une faute inexcusable cause exclusive.",
-        explication: "Le défaut de ceinture n'est pas une faute inexcusable au sens de la jurisprudence."
+        bonne: "Non, car ce n'est pas considéré comme une faute inexcusable cause exclusive",
+        explication: "La Cour de cassation juge constamment que le <b>défaut de ceinture n'est pas une faute inexcusable</b> au sens de la loi Badinter, et surtout qu'il ne peut <b>jamais</b> être la cause exclusive de l'accident (la cause exclusive étant la collision elle-même). Le droit à indemnisation du passager reste donc intégral."
       },
       q20: {
-        bonne: "Oui, car c'est une voie privée ouverte à la circulation.",
-        explication: "La loi Badinter s'applique sur les voies privées ouvertes à la circulation, comme les parkings de supermarchés."
-      }
+        bonne: "Oui, car c'est une voie privée ouverte à la circulation",
+        explication: "La loi Badinter s'applique sur <b>toutes les voies ouvertes à la circulation</b>, qu'elles soient publiques ou privées : parkings de supermarché, voies de lotissement, parkings d'entreprise accessibles… Seules les voies strictement privées et fermées (circuits, propriétés totalement closes) échappent à son application."
+      },
     };
 
-    // Mettre à jour la barre de progression
     function updateProgress() {
       let answered = 0;
       const total = Object.keys(reponsesCorrectes).length;
-      
       for (let q in reponsesCorrectes) {
-        if (document.querySelector(`input[name="${q}"]:checked`)) {
-          answered++;
-        }
+        if (document.querySelector(`input[name="${q}"]:checked`)) answered++;
       }
-      
       document.getElementById('answeredCount').textContent = answered;
       document.getElementById('progressFill').style.width = `${(answered / total) * 100}%`;
     }
 
-    // Écouter les changements sur les boutons radio
     document.querySelectorAll('input[type="radio"]').forEach(radio => {
       radio.addEventListener('change', updateProgress);
     });
+
+    // Stockage des résultats pour l'export PDF
+    let resultatsQuiz = null;
+    // État : le PDF a-t-il déjà été téléchargé dans cette session ?
+    let pdfDejaGenere = false;
 
     function corrigerQuiz() {
       let score = 0;
       const total = Object.keys(reponsesCorrectes).length;
       let html = "";
+      const detailsResultats = [];
 
       for (let question in reponsesCorrectes) {
         const questionDiv = document.querySelector(`[data-question="${question}"]`);
         const reponseUtilisateur = document.querySelector(`input[name="${question}"]:checked`);
         const estCorrect = reponseUtilisateur && reponseUtilisateur.value === reponsesCorrectes[question];
         const feedback = questionDiv.querySelector('.feedback');
+        const questionText = questionDiv.querySelector('h3').textContent;
 
         if (estCorrect) {
           score++;
@@ -903,7 +1046,6 @@
           feedback.innerHTML = `<strong>✗ Incorrect.</strong> La bonne réponse était : ${corrections[question].bonne}<br>${corrections[question].explication}`;
         }
 
-        // Désactiver les options
         questionDiv.querySelectorAll('.option').forEach(opt => {
           opt.classList.add('disabled');
           const input = opt.querySelector('input');
@@ -914,65 +1056,178 @@
           }
         });
 
-        // Ajouter au résumé
-        const questionText = questionDiv.querySelector('h3').textContent;
+        // Réponse choisie en texte
+        let reponseTexte = "Aucune réponse";
+        if (reponseUtilisateur) {
+          reponseTexte = reponseUtilisateur.parentElement.textContent.trim();
+        }
+
+        detailsResultats.push({
+          numero: question.toUpperCase(),
+          questionTexte: questionText,
+          estCorrect: estCorrect,
+          bonneReponse: corrections[question].bonne,
+          reponseUtilisateur: reponseTexte,
+          explication: corrections[question].explication
+        });
+
         html += `
           <div class="result-item ${estCorrect ? 'correct' : 'incorrect'}">
             <div class="result-title">${question.toUpperCase()} — ${estCorrect ? '✓ Correct' : '✗ Incorrect'}</div>
             <div class="result-question">${questionText}</div>
             <div class="answer">Bonne réponse : ${corrections[question].bonne}</div>
             ${!estCorrect && reponseUtilisateur ? `<div class="user-answer">Votre réponse : ${reponseUtilisateur.parentElement.textContent.trim()}</div>` : ''}
+            <div class="result-explication"><strong>Explication :</strong> ${corrections[question].explication}</div>
           </div>
         `;
       }
 
       const pourcentage = Math.round((score / total) * 100);
-
+      const noteSur20 = Math.round((score / total) * 20 * 10) / 10;  // Une décimale
       let appreciation = "";
       let scoreClass = "";
       if (pourcentage >= 85) {
-        appreciation = "Excellent ! Vous maîtrisez très bien les principes de la loi Badinter.";
+        appreciation = "Excellent travail ! Vous maîtrisez parfaitement les enjeux de ce dossier. Votre analyse est rigoureuse et témoigne d'une solide compréhension des mécanismes juridiques et pratiques. Vous êtes prêt(e) à gérer ce type de situation en autonomie.";
         scoreClass = "excellent";
       } else if (pourcentage >= 70) {
-        appreciation = "Bon niveau ! Quelques points restent à consolider.";
+        appreciation = "Bon niveau, bravo ! Vous avez intégré les notions essentielles et vos réflexes professionnels sont bons. Quelques points méritent encore d'être consolidés — relisez attentivement les explications pour franchir le cap.";
         scoreClass = "good";
       } else if (pourcentage >= 50) {
-        appreciation = "Des bases à renforcer. Revoyez les notions clés du module.";
+        appreciation = "Des bases réelles sur lesquelles construire. Certaines subtilités du dossier demandent encore à être approfondies, c'est tout l'intérêt de la formation. Prenez le temps de revoir les corrections : chaque dossier vous fera progresser.";
         scoreClass = "average";
       } else {
-        appreciation = "Ce quiz met en évidence plusieurs notions à approfondir pendant la formation.";
+        appreciation = "Pas d'inquiétude : ce quiz est avant tout un outil d'apprentissage, et les cas pratiques sont conçus pour vous faire réfléchir. Les corrections détaillées ci-dessous vous donneront les clés pour mieux aborder ce type de dossier. Reprenez tranquillement, vous progresserez à coup sûr !";
         scoreClass = "low";
       }
+
+      // Stockage pour l'export PDF
+      resultatsQuiz = {
+        titre: document.querySelector('.hero h1').textContent,
+        sousTitre: document.querySelector('.hero p strong').textContent,
+        score: score,
+        total: total,
+        pourcentage: pourcentage,
+        noteSur20: noteSur20,
+        appreciation: appreciation,
+        details: detailsResultats,
+        date: new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+      };
 
       document.getElementById("results").innerHTML = `
         <div class="score-box">
           <div class="score-circle ${scoreClass}">${score}/${total}</div>
-          <h2>Votre score : ${pourcentage}%</h2>
+          <h2>Votre score : ${pourcentage}% — Note : ${noteSur20}/20</h2>
           <p>${appreciation}</p>
         </div>
         ${html}
         <div class="footer-note">
-          Ce quiz permet d'évaluer vos connaissances sur la loi Badinter. 
-          Consultez l'infographie ci-dessus pour réviser les points clés.
+          Ce quiz porte sur un cas pratique fictif. Les noms, dates et situations sont purement pédagogiques.
+          Prenez le temps de relire les corrections pour consolider vos acquis.
         </div>
       `;
 
       document.getElementById("results").style.display = "block";
       document.getElementById("submitBtn").disabled = true;
 
-      window.scrollTo({
-        top: document.getElementById("results").offsetTop - 20,
-        behavior: "smooth"
-      });
+      // Le bouton d'export n'est affiché que si le PDF n'a pas déjà été généré
+      // (sinon, on a refait le quiz et on doit empêcher la regénération)
+      if (!pdfDejaGenere) {
+        document.getElementById("exportBtn").style.display = "inline-block";
+        document.getElementById("exportHelp").style.display = "block";
+      } else {
+        document.getElementById("exportDone").style.display = "block";
+      }
+
+      window.scrollTo({ top: document.getElementById("results").offsetTop - 20, behavior: "smooth" });
+    }
+
+    function exporterPDF() {
+      if (!resultatsQuiz) return;
+      if (pdfDejaGenere) return;  // Sécurité supplémentaire
+
+      // Nettoyer les anciennes injections
+      document.querySelectorAll('.pdf-header, .pdf-meta, .pdf-footer, .results-detail-title')
+        .forEach(el => el.remove());
+
+      const resultsBox = document.getElementById('results');
+      const scoreBox = resultsBox.querySelector('.score-box');
+
+      // 1) En-tête TMK pour le PDF (en haut de la page)
+      const headerBlock = document.createElement('div');
+      headerBlock.className = 'pdf-header';
+      headerBlock.innerHTML = `
+        <div class="brand">TMK PERFORMANCES</div>
+        <div class="module">Formation Gestion des Sinistres Corporels</div>
+        <div class="doc-type">RÉSULTATS DU QUIZ — DOCUMENT FICTIF À USAGE PÉDAGOGIQUE</div>
+      `;
+      const shell = document.querySelector('.quiz-shell');
+      shell.insertBefore(headerBlock, shell.firstChild);
+
+      // 2) Bloc meta avec date, score, note
+      const metaBlock = document.createElement('div');
+      metaBlock.className = 'pdf-meta';
+      metaBlock.innerHTML = `
+        <strong>Date de passation :</strong> ${resultatsQuiz.date}<br>
+        <strong>Cas pratique :</strong> ${resultatsQuiz.titre}<br>
+        <strong>Note finale :</strong> ${resultatsQuiz.noteSur20} / 20 &nbsp;•&nbsp;
+        <strong>Score :</strong> ${resultatsQuiz.score} / ${resultatsQuiz.total} questions correctes (${resultatsQuiz.pourcentage} %)
+      `;
+      resultsBox.insertBefore(metaBlock, scoreBox);
+
+      // 3) Titre de la section "détail des réponses"
+      const detailTitle = document.createElement('div');
+      detailTitle.className = 'results-detail-title';
+      detailTitle.textContent = "Détail des réponses et corrections";
+      scoreBox.insertAdjacentElement('afterend', detailTitle);
+
+      // 4) Pied de page de fin de document
+      const footerBlock = document.createElement('div');
+      footerBlock.className = 'pdf-footer';
+      footerBlock.innerHTML = `
+        — DOCUMENT FICTIF À USAGE PÉDAGOGIQUE —
+        <div class="sub">TMK Performances – Formation Sinistres Corporels • Les noms, dates et situations sont entièrement fictifs.</div>
+      `;
+      resultsBox.appendChild(footerBlock);
+
+      // Marquer comme généré AVANT d'imprimer (au cas où l'utilisateur annulerait,
+      // on considère malgré tout que le PDF a été ouvert/vu)
+      pdfDejaGenere = true;
+
+      // Lancer l'impression
+      setTimeout(() => {
+        window.print();
+        // Après impression : masquer le bouton et afficher le message
+        document.getElementById("exportBtn").style.display = "none";
+        document.getElementById("exportHelp").style.display = "none";
+        document.getElementById("exportDone").style.display = "block";
+      }, 150);
     }
 
     function reinitialiserQuiz() {
+      // Si le PDF a déjà été généré, prévenir l'utilisateur
+      if (pdfDejaGenere) {
+        const continuer = confirm(
+          "⚠️ Vous avez déjà téléchargé le PDF de vos résultats.\n\n" +
+          "Vous pouvez refaire le quiz pour vous entraîner, mais il ne sera plus possible " +
+          "de regénérer un nouveau PDF dans cette session.\n\n" +
+          "Souhaitez-vous continuer ?"
+        );
+        if (!continuer) return;
+      }
+
       document.getElementById("quizForm").reset();
       document.getElementById("results").style.display = "none";
       document.getElementById("results").innerHTML = "";
       document.getElementById("submitBtn").disabled = false;
-      
-      // Réinitialiser les styles
+      document.getElementById("exportBtn").style.display = "none";
+      document.getElementById("exportHelp").style.display = "none";
+      document.getElementById("exportDone").style.display = "none";
+      // ATTENTION : on ne remet PAS pdfDejaGenere à false
+      // Cela garantit qu'un seul PDF peut être généré par session
+      resultatsQuiz = null;
+      // Nettoyer les blocs PDF qui auraient été injectés
+      document.querySelectorAll('.pdf-header, .pdf-meta, .pdf-footer, .results-detail-title')
+        .forEach(el => el.remove());
       document.querySelectorAll('.question').forEach(q => {
         q.classList.remove('answered-correct', 'answered-incorrect');
       });
@@ -983,13 +1238,8 @@
         f.className = 'feedback';
         f.innerHTML = '';
       });
-      
       updateProgress();
-      
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   </script>
 </body>
